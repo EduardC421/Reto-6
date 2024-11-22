@@ -1,0 +1,24 @@
+@startuml Diagrama de comunicación
+left to right direction
+
+
+:Cliente:
+rectangle ":Registro" as reg
+rectangle "venta:Venta" as vent
+rectangle "catalogo:CatalogoProductos" as c
+rectangle "fechaHora:Date" as date
+rectangle "lineasVenta:List" as lineasVenta
+
+Cliente -- reg : "-->" 1: crearNuevaVenta()
+Cliente "-->" -- reg : 2: introducirArticulo(ArticuloID, cant)
+Cliente -- reg : "-->" 8: finalizarVenta()
+
+reg -- c : 3: getEspecificacion(id) "-->"
+reg -- vent : "-->" 4: crearLineaVenta(espec, cant)
+
+vent "-->" -- date : 5: new Date()
+
+vent "-->" -- lineasVenta : 6: new ArrayList()
+
+vent "-->" -- lineasVenta : 7: añadir(LineaVenta(espec, cant))
+@enduml
